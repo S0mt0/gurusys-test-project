@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  padding: 0;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+body,
+table,
+td,
+p,
+a,
+li {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-family: Poppins !important;
+}
+table td {
+  border-collapse: collapse;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-color: #ffffff;
+}
+p,
+a,
+li,
+td,
+body,
+table,
+blockquote {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+img,
+a img {
+  border: 0;
+  outline: none;
+  text-decoration: none;
+}
+img {
+  -ms-interpolation-mode: bicubic;
+}
+* img[tabindex="0"] + div {
+  display: none !important;
+}
+a[href^="tel"],
+a[href^="sms"],
+a[href^="mailto"],
+a[href^="date"] {
+  color: inherit;
+  cursor: default;
+  text-decoration: none;
+}
+a[x-apple-data-detectors] {
+  color: inherit !important;
+  text-decoration: none !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+}
+@media screen {
+  body {
+    font-family: "Lato", Arial, Helvetica, sans-serif;
+  }
+}
+@media only screen and (max-width: 640px) {
+  body {
+    margin: 0px !important;
+    padding: 0px !important;
+  }
+  body,
+  table,
+  td,
+  p,
+  a,
+  li,
+  blockquote {
+    -webkit-text-size-adjust: none !important;
+  }
+  .table-main,
+  .table-container,
+  .social-icons,
+  table,
+  .table-container td {
+    width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 !important;
+    float: none !important;
+  }
+  .table-container img {
+    width: 100% !important;
+    max-width: 120px !important;
+    display: block;
+    height: auto !important;
+  }
+  .table-container a {
+    width: 50% !important;
+    max-width: 100% !important;
+  }
+  .table-container .logo {
+    width: 200px !important;
+    height: 30px !important;
+  }
+  .table-container .alert-icon {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  .social-icons {
+    float: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 220px !important;
+    max-width: 220px !important;
+    min-width: 220px !important; /* background:
+      #383e56 !important; */
+  }
+  .social-icons td {
+    width: auto !important;
+    min-width: 1% !important;
+    margin: 0 !important;
+    float: none !important;
+    text-align: center;
+  }
+  .social-icons td a {
+    width: auto !important;
+    max-width: 100% !important;
+    font-size: 10px !important;
+  }
+  .mobile-title {
+    font-size: 32px !important;
+    color: #f6f6f6 !important;
+  }
+}

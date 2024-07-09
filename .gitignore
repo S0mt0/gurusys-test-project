@@ -1,0 +1,11 @@
+# Node modules
+gurusys-blog-client/node_modules/
+gurusys-blog-server/node_modules/
+
+# environment variables
+gurusys-blog-client/.env
+gurusys-blog-client/.env.local
+
+gurusys-blog-server/.env
+gurusys-blog-server/.env.production
+gurusys-blog-server/.env.development

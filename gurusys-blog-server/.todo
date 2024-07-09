@@ -1,0 +1,4 @@
+Build a RESTful API for a simple blog using Node.js, Express/AdonisJs, and TypeScript.
+Create a API with endpoints for CRUD (Create, Read, Update, Delete) operations on blog posts
+Implement authentication and authorization using JSON Web Tokens (JWT)
+Use a database like MongoDB or PostgreSQL

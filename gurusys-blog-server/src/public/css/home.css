@@ -1,0 +1,81 @@
+*,
+html,
+::after,
+::before,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+body {
+  background-color: #020202;
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Logo_container img {
+  width: 100px;
+  height: auto;
+}
+
+.Logo_container h1 {
+  color: #622c8c;
+  font-family: "Times New Roman", Times, serif;
+}
+.Logo_container span {
+  color: #f7931e;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  inset-inline: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  padding: 2rem;
+  gap: 1rem;
+}
+footer > div {
+  text-align: center;
+}
+
+footer > div:nth-child(2) {
+  order: -1;
+}
+
+footer a {
+  color: #f7931e;
+}
+
+footer a:hover {
+  color: #f7921eae;
+}
+
+#time,
+#port {
+  color: #622c8c;
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    flex-direction: row;
+  }
+
+  footer > div {
+    text-align: start;
+  }
+
+  footer > div:nth-child(2) {
+    order: initial;
+  }
+}
