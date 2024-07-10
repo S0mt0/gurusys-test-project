@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2016",
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types", "./src"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "module": "commonjs",
     "pretty": true,
     "sourceMap": true,
@@ -20,9 +20,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": false,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"]
     }
   },
-  "include": ["src/**/*", "src/server.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "tests"]
 }

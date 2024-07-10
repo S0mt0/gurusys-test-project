@@ -186,6 +186,7 @@ declare global {
     google_auth: boolean;
 
     blogs: BlogDoc[];
+    refresh_token: string;
   }
 
   /** Interface describing custom methods associated with the `User` model */
@@ -216,6 +217,11 @@ declare global {
   interface IUserModel extends Model<IUser, {}, IUserMethods> {
     /** Finds a user by their email */
     findByEmail(email: string): Promise<HydratedDocument<IUser, IUserMethods>>;
+
+    /** Finds a user by their email */
+    findBySession(
+      refresh_token: string
+    ): Promise<HydratedDocument<IUser, IUserMethods>>;
   }
 
   interface UserDoc extends Document<{}, {}, IUser> {}

@@ -8,16 +8,18 @@ import { sendError } from "../../lib/errors";
  * @param {ObjectSchema} fieldsSchema
  * @param {ObjectSchema} fileSchema (optional)
  */
-export const validateObjPayload =
-  (fieldsSchema: ObjectSchema, fileSchema?: ObjectSchema) =>
+export const validatePayload =
+  (fieldsSchema: ObjectSchema | null, fileSchema?: ObjectSchema) =>
   (req: CustomRequest, _: Response, next: NextFunction) => {
     let payload = req.body;
 
-    const { error, value } = fieldsSchema.validate(payload);
+    if (fieldsSchema) {
+      const { error, value } = fieldsSchema.validate(payload);
 
-    if (error) sendError.badRequestError(error.message);
+      if (error) sendError.badRequestError(error.message);
 
-    req.body = { ...payload, ...value };
+      req.body = { ...payload, ...value };
+}
 
     if (fileSchema) {
       const { error, value: files } = fileSchema.validate(req.files);

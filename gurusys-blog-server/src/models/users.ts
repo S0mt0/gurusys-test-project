@@ -4,12 +4,16 @@ import jwt from "jsonwebtoken";
 
 import {
   transformSchema,
+  getRandomNumbers,
+  isModelRegistered,
+} from "../lib/utils";
+
+import {
   TIME_IN,
   PROFILE_IMGS_COLLECTIONS_LIST,
   PROFILE_IMGS_NAME_LIST,
-  getRandomNumbers,
-  isModelRegistered,
-} from "../lib";
+} from "../lib/constants";
+
 import { envs } from "../config";
 
 import { Blogs } from "./blogs";
@@ -21,7 +25,6 @@ const userSchema = new mongoose.Schema<IUser, IUserModel>(
       fullname: {
         type: String,
         lowercase: true,
-        required: true,
         minlength: [3, "fullname must be 3 letters long"],
       },
       email: {
@@ -35,6 +38,7 @@ const userSchema = new mongoose.Schema<IUser, IUserModel>(
         type: String,
         minlength: [3, "Username must be 3 letters long"],
         unique: true,
+        lowercase: true,
       },
       bio: {
         type: String,
@@ -90,6 +94,11 @@ const userSchema = new mongoose.Schema<IUser, IUserModel>(
       default: false,
     },
 
+    refresh_token: {
+      type: String,
+      default: "",
+    },
+
     blogs: {
       type: [
         {
@@ -111,13 +120,21 @@ const userSchema = new mongoose.Schema<IUser, IUserModel>(
     timestamps: {
       createdAt: "joinedAt",
     },
-    toObject: transformSchema(["google_auth"]),
-    toJSON: transformSchema(["google_auth"]),
+    toObject: transformSchema([
+      "google_auth",
+      "refresh_token",
+      "personal_info.password",
+    ]),
+    toJSON: transformSchema([
+      "google_auth",
+      "refresh_token",
+      "personal_info.password",
+    ]),
   }
 );
 
 // Indexing the doc for quick fetch
-userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ "personal_info.email": 1 }, { unique: true });
 
 // Schema pre-save middlewares
 userSchema.pre("save", async function (next) {
@@ -150,6 +167,10 @@ userSchema.statics.findByEmail = async function (email) {
   return await this.findOne({ "personal_info.email": email });
 };
 
+userSchema.statics.findBySession = async function (refresh_token) {
+  return await this.findOne({ refresh_token: refresh_token });
+};
+
 // Schema methods
 userSchema.methods.verifyPassword = async function (password: string) {
   return await bcrypt.compare(password, this.personal_info.password);
@@ -162,7 +183,7 @@ userSchema.methods.createAccessToken = function (
     { userId: this._id, google_auth: this.google_auth },
     envs.jwtSecret,
     {
-      expiresIn: `${expiresAt || TIME_IN.days[3]}`,
+      expiresIn: `${expiresAt || TIME_IN.hours[1]}`,
     }
   );
 };

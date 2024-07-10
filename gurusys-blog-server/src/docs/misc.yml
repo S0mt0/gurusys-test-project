@@ -1,0 +1,12 @@
+securityDefinitions:
+  session:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Used by (logged in) user in session to access protected routes. Format - `Bearer [token]`
+
+  jwtAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: This token is used when sending authentication requests. Format - `Bearer [token]`

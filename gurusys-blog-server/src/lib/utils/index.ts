@@ -148,38 +148,6 @@ export const removeObjectProps = (
   return obj;
 };
 
-/**
- * Multiplies all the number arguments and returns their product
- * @param args Numbers
- * @returns Product of the passed in numbers
- */
-export const multiply = (...args: number[]) => {
-  if (args.length === 0) {
-    return 0; // If no numbers are provided, return 0
-  }
-
-  return args.reduce(
-    (accumulator, currentValue) => accumulator * currentValue,
-    1
-  );
-};
-
-/**
- * Adds up all the provided number and returns their `sum`
- * @param args Numbers
- * @returns Sum of the passed in numbers
- */
-export const sum = (...args: number[]) => {
-  if (args.length === 0) {
-    return 0; // If no numbers are provided, return 0
-  }
-
-  return args.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0
-  );
-};
-
 /** Generates and returns an object whose keys in number represent ***time*** in `hour` and values expressed in `milliseconds`
  * @description Ranges from 1 to 24 ***hours***
  */
@@ -269,8 +237,73 @@ export function validateObjectId(objectId: string) {
     sendError.badRequestError("Invalid ID!");
 }
 
-export function reject() {
+/** Throw an unauthorizationError when user is not found */
+export function reject(message?: string) {
   sendError.unauthorizationError(
-    "Sorry, we could not find that user in our records."
+    message || "Sorry, we could not find that user in our records."
   );
 }
+
+/**
+ * Selectively updates properties that are allowed to be updated by the end user E.g `username`.
+ * @param user
+ * @param data
+ * @returns updated user document
+ */
+export const selectivelyUpdateUserProfile = async (
+  user: CustomGenericDocument<IUser>,
+  data: Partial<IUser>
+) => {
+  if (data.personal_info) {
+    if (user.personal_info.avatarUrl) {
+      user.personal_info.avatarUrl = data.personal_info.avatarUrl;
+    }
+
+    if (user.personal_info.bio) {
+      user.personal_info.bio = data.personal_info.bio;
+    }
+
+    if (user.personal_info.email) {
+      user.personal_info.email = data.personal_info.email;
+    }
+
+    if (user.personal_info.fullname) {
+      user.personal_info.fullname = data.personal_info.fullname;
+    }
+
+    if (user.personal_info.username) {
+      user.personal_info.username = data.personal_info.username;
+    }
+  }
+
+  if (data.social_links) {
+    if (user.social_links.facebook) {
+      user.social_links.facebook = data.social_links.facebook;
+    }
+
+    if (user.social_links.github) {
+      user.social_links.github = data.social_links.github;
+    }
+
+    if (user.social_links.instagram) {
+      user.social_links.instagram = data.social_links.instagram;
+    }
+
+    if (user.social_links.twitter) {
+      user.social_links.twitter = data.social_links.twitter;
+    }
+
+    if (user.social_links.website) {
+      user.social_links.website = data.social_links.website;
+    }
+
+    if (user.social_links.youtube) {
+      user.social_links.youtube = data.social_links.youtube;
+    }
+  }
+
+  // update user profile
+  await user.save({ validateBeforeSave: true });
+
+  return user;
+};

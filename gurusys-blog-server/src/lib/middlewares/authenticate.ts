@@ -20,7 +20,7 @@ export const authenticate = async (
   const { data, error } = verifyAuthorization(req);
   if (error) sendError.unauthorizationError(error);
 
-  const { userId, google_auth } = data;
+  const { userId } = data;
 
   if (!userId) sendError.unauthorizationError();
   validateObjectId(userId);

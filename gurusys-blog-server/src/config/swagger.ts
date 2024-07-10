@@ -11,7 +11,7 @@ const swagger: Options = {
     info: {
       version,
       description: description,
-      title: `HireUs Logistics`,
+      title: `Gurusys Blog (Test Project)`,
       contact: { name: "Nkemakolam Somtochukwu", email: "sewkito@gmail.com" },
       servers: [{ url: `http://localhost:${envs.port}/api/v1` }],
       license: {

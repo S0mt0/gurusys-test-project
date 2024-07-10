@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/home.css" />
+  </head>
+  <body>
+    <div class="Logo_container">
+      <!-- <img src="/images/hireus_logo.png" alt="logo" /> -->
+      <h1>GuruSys Blog<span>-Test Project</span>🔎</h1>
+    </div>
+    <footer>
+      <div>Server Time: <span id="time"></span></div>
+      <div>
+        <a href="/api/v1/doc">API Documentation</a>
+      </div>
+      <div>Server is listening on port: <span id="port"></span></div>
+    </footer>
+
+    <script>
+      // Get the span elements by their IDs
+      const timeSpan = document.getElementById("time");
+      const portSpan = document.getElementById("port");
+
+      // Function to get the current time
+      function getCurrentTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+        return `${hours}:${minutes}:${seconds}`;
+      }
+
+      function updateTime() {
+        if (timeSpan) timeSpan.textContent = getCurrentTime();
+      }
+
+      updateTime();
+
+      setInterval(updateTime, 1000);
+
+      console.log("time :>> ", getCurrentTime());
+
+      if (portSpan)
+        portSpan.textContent =
+          typeof window !== "undefined" && window.location.port
+            ? window.location.port
+            : "UNKNOWN";
+    </script>
+  </body>
+</html>

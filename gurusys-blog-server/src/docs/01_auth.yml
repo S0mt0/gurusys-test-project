@@ -1,0 +1,227 @@
+paths:
+  /api/v1/auth/sign-up:
+    post:
+      tags:
+        - Authentication
+      summary: Register new account
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/signUp"
+      responses:
+        "201":
+          description: Registration successful
+          headers:
+            Authorization:
+              schema:
+                type: string
+        "400":
+          description: Failed schema validation
+        "409":
+          description: Account with provided detail already exists
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Logs in user
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/logIn"
+      responses:
+        "200":
+          description: Login successful
+          headers:
+            Authorization:
+              schema:
+                type: string
+        "400":
+          description: Failed schema validation
+        "403":
+          description: Unauthorized access [invalid email or password]
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/auth/forgot-password:
+    post:
+      tags:
+        - Authentication
+      description: Handles forgot password request
+      summary: Forgot Password
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/forgotPassword"
+
+      responses:
+        "200":
+          description: Password reset code sent
+          headers:
+            Authorization:
+              schema:
+                type: string
+        "400":
+          description: Failed schema validation
+        "404":
+          description: User was not found
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/auth/password/resend-code:
+    get:
+      tags:
+        - Authentication
+      description: Handles resending of password reset code. For this to work, you must have hit the forgot-password endpoint first, where an authorization token was sent through the response headers as well. This token is required to request a resend of password reset code as it keeps track of the session.
+      summary: Resends password reset code
+      security:
+        - jwtAuth: []
+      produces:
+        - application/json
+
+      responses:
+        "200":
+          description: Password reset code sent
+          headers:
+            Authorization:
+              schema:
+                type: string
+        "403":
+          description: Unauthorized
+        "401":
+          description: Unauthenticated [missing valid authorization header]
+        "404":
+          description: User was not found
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/auth/verify-password-reset-code:
+    post:
+      tags:
+        - Authentication
+      description: Handles verification of password reset code
+      summary: Verifies password reset code
+      security:
+        - jwtAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/verifyPasswordResetCode"
+
+      responses:
+        "200":
+          description: Verification successful
+          headers:
+            Authorization:
+              schema:
+                type: string
+        "400":
+          description: Failed schema validation or code was not a match
+        "404":
+          description: User was not found
+        "401":
+          description: Unauthenticated [missing valid authorization header]
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/auth/reset-password:
+    put:
+      tags:
+        - Authentication
+      description: Handles resetting password after is was forgotten
+      summary: Resets forgotten password
+      security:
+        - jwtAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/resetPassword"
+
+      responses:
+        "200":
+          description: Password reset successful
+          headers:
+            Authorization:
+              schema:
+                type: string
+        "400":
+          description: Failed schema validation
+        "404":
+          description: User was not found
+        "403":
+          description: Unauthorized
+        "401":
+          description: Unauthenticated [missing valid authorization header]
+        "500":
+          description: An unexpected error occurred
+
+definitions:
+  signUp:
+    type: object
+    properties:
+      username:
+        type: string
+        default: Sewkito001
+      email:
+        type: string
+        format: email
+        default: example@email.com
+      password:
+        type: string
+        default: Password123!
+
+  logIn:
+    type: object
+    properties:
+      email:
+        type: string
+        required: true
+      password:
+        type: string
+        required: true
+
+  resetPassword:
+    type: object
+    properties:
+      new_password:
+        type: string
+        required: true
+      confirm_password:
+        type: string
+        required: true
+
+  forgotPassword:
+    type: object
+    properties:
+      email:
+        type: string
+        required: true
+
+  verifyPasswordResetCode:
+    type: object
+    properties:
+      password_reset_code:
+        type: string
+        required: true

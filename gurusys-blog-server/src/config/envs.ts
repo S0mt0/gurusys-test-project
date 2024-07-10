@@ -11,10 +11,9 @@ export const envs = {
   baseUrlDev: `http://localhost:${process.env.PORT}` as string,
   baseUrl: (process.env.NODE_ENV === "development"
     ? `http://localhost:${process.env.PORT}`
-    : process.env.BASEURLPROD) as string,
+    : process.env.BASE_URL_PROD) as string,
 
   jwtSecret: process.env.JWT_SECRET as string,
-  jwtExpiration: process.env.JWT_EXPIRATION as string,
 
   cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME as string,
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY as string,

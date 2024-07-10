@@ -1,0 +1,190 @@
+paths:
+  /api/v1/u/sign-out:
+    post:
+      tags:
+        - Users
+      summary: Logs out a user
+      produces:
+        - application/json
+      security:
+        - session: []
+      responses:
+        "204":
+          description: No content
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/u/refresh-token:
+    get:
+      tags:
+        - Users
+      summary: Refreshes a user's access token
+      produces:
+        - application/json
+      security:
+        - session: []
+      responses:
+        "200":
+          description: success
+        "403":
+          description: User not found
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/u/profile:
+    get:
+      tags:
+        - Users
+      summary: Returns user profile
+      produces:
+        - application/json
+      security:
+        - session: []
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: User was not found
+        "500":
+          description: An unexpected error occurred
+
+    patch:
+      tags:
+        - Users
+      summary: Updates user profile
+      security:
+        - session: []
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/profileUpdate"
+
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: User was not found
+        "500":
+          description: An unexpected error occurred
+
+    delete:
+      tags:
+        - Users
+      summary: Deletes account
+      security:
+        - session: []
+      produces:
+        - application/json
+
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: User was not found
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/u/update-password:
+    patch:
+      tags:
+        - Users
+      summary: Updates user Password
+      security:
+        - session: []
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/updatePassword"
+
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Failed schema validation or current password is incorrect
+        "403":
+          description: Unauthorized - unknown user in session
+        "500":
+          description: An unexpected error occurred
+
+  /api/v1/u/avatar:
+    patch:
+      tags:
+        - Users
+      summary: Updates user Password
+      security:
+        - session: []
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: avatar
+          in: formData
+          description: The avatar image file to upload. E.g Client-side implementation - `formData.append('avatar', avatarFile);`. File must be either of "image/jpeg", "image/jpg", "image/gif", "image/png" and must not exceed `5mb` file size.
+          required: false
+          type: file
+
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Failed schema validation
+        "403":
+          description: Unauthorized - unknown user in session
+        "500":
+          description: An unexpected error occurred
+
+definitions:
+  updatePassword:
+    type: object
+    properties:
+      old_password:
+        type: string
+        required: true
+      new_password:
+        type: string
+        required: true
+      confirm_password:
+        type: string
+        required: true
+
+  profileUpdate:
+    type: object
+    properties:
+      profile_info:
+        type: object
+        properties:
+          username:
+            type: string
+          fullname:
+            type: string
+          email:
+            type: email
+          avatarUrl:
+            type: string
+          bio:
+            type: string
+
+      social_links:
+        type: object
+        properties:
+          youtube:
+            type: string
+          instagram:
+            type: string
+          facebook:
+            type: email
+          twitter:
+            type: string
+          github:
+            type: string
+          website:
+            type: string

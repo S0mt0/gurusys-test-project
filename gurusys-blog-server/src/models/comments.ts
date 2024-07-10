@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { isModelRegistered } from "../lib";
+import { isModelRegistered } from "../lib/utils";
 
 const commentSchema = new mongoose.Schema<IComment>(
   {
