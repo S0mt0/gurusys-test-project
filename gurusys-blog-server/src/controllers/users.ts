@@ -242,7 +242,7 @@ export const resetForgottenPassword = async (
     maxAge: refreshTokenExpiresIn,
   });
 
-  // todo: notify user via mail about their paasword reset
+  // todo: notify user via mail about their password reset
   res.setHeader("Authorization", accessToken);
   return res.status(status.OK).json({
     success: true,

@@ -118,7 +118,7 @@ export class UserService {
   public async verifyPasswordResetCode(data: any) {
     const user = await this.findByEmail(data.email);
 
-    if (data.password_reset_code.toString() !== data.code.toString())
+    if (data.password_reset_code !== data.code)
       sendError.badRequestError("Oops! That code was not a match, try again.");
 
     if (Date.now() > data.expiresAt)
