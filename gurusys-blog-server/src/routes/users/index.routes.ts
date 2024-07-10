@@ -1,8 +1,9 @@
 import { Router } from "express";
 
 import { authenticate, validatePayload } from "../../lib/middlewares";
-import * as _ from "./validation-schema";
 import * as controller from "../../controllers/users";
+
+import * as _ from "./validation-schema";
 
 export default (router: Router) => {
   //==========================/ START OF AUTHENTICATION ROUTES /==========================/

@@ -1,5 +1,19 @@
+import { Route, Routes } from "react-router-dom";
+
+import * as components from "./components";
+
 function App() {
-  return <div className="bg-teal-500 text-white">HELLO WORLD!</div>;
+  return (
+    <Routes>
+      <Route element={<components.AppLayout />}>
+        {/* public routes  */}
+        <Route index element={<div>Hello</div>} />
+
+        {/* catch-all route*/}
+        <Route path="*" element={<div>Not found</div>} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;

@@ -5,10 +5,11 @@ import { userService } from "../services";
 import {
   obscureEmail,
   selectivelyUpdateUserProfile,
-  sendError,
-  TIME_IN,
   verifyAuthorization,
-} from "../lib";
+} from "../lib/utils";
+
+import { TIME_IN } from "../lib/constants";
+import { sendError } from "../lib/errors";
 
 export const signUp = async (req: CustomRequest, res: Response) => {
   const user = await userService.createAccount(req.body);
@@ -246,6 +247,6 @@ export const resetForgottenPassword = async (
   res.setHeader("Authorization", accessToken);
   return res.status(status.OK).json({
     success: true,
-    message: "Profile updated successfully",
+    message: "Your password has been reset successfully",
   });
 };

@@ -1,18 +1,19 @@
-import { axiosPrivate, userEndPoints } from "../axios";
+import { USER_ENDPOINTS } from "../../constants";
+import { axiosPrivate } from "../axios";
 
 // User Queries
 export const logout = async () => {
-  return await axiosPrivate.post(userEndPoints.logout);
+  return await axiosPrivate.post(USER_ENDPOINTS.logout);
 };
 
 export const getProfile = async () => {
   return (
-    await axiosPrivate.get<ApiResponse<ProfileData>>(userEndPoints.profile)
+    await axiosPrivate.get<ApiResponse<ProfileData>>(USER_ENDPOINTS.profile)
   ).data;
 };
 
 export const refreshToken = async () => {
   return await axiosPrivate.get<ApiResponse<ProfileData> | undefined>(
-    userEndPoints.refresh
+    USER_ENDPOINTS.refresh
   );
 };

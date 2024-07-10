@@ -1,4 +1,4 @@
 export * from "./access-control";
-export * from "./providers/ui-theme-provider";
+export * from "./shared/theme-provider";
 export * from "./utils";
-// export * from "./skeletons"
+export * from "./shared";

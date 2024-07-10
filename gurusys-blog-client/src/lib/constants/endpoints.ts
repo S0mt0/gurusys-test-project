@@ -1,5 +1,5 @@
 /** Server endpoints for authenticaion requests */
-export const AUTH_END_POINTS = {
+export const AUTH_ENDPOINTS = {
   /** `POST` : Sign up route
    * @payload: `SignUp` */
   signup: "/auth/sign-up",
@@ -24,13 +24,20 @@ export const AUTH_END_POINTS = {
   resend_password_reset_code: "/auth/password/resend-code",
 };
 
-export const userEndPoints = {
+export const USER_ENDPOINTS = {
   /** `GET` : Profile lookup route */
   profile: "/u/profile",
 
-  /** `PATCH` : Profile lookup route
+  /** `PATCH` : Update profile route
+   * @payload: `Partial<UserProfile>` */
+  update_profile: "/u/profile",
+
+  /** `DELETE` : Update profile route */
+  delete_account: "/u/profile",
+
+  /** `PATCH` : Update avatar
    * @payload: `formData` */
-  update_profile: "/u/update-profile",
+  update_avatar: "/u/avatar",
 
   /** `POST` : Logout route */
   logout: "/u/sign-out",

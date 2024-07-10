@@ -23,3 +23,4 @@ export * from "./pagination";
 export * from "./input-otp";
 export * from "./label";
 export * from "./menubar";
+export * from "./logo";
