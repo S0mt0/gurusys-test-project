@@ -1,5 +1,4 @@
 import { Bell, SearchIcon, SquarePen } from "lucide-react";
-import { BellIcon } from "@radix-ui/react-icons";
 import { Link } from "react-router-dom";
 // import { toast } from "react-hot-toast";
 

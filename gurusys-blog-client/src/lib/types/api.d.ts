@@ -36,3 +36,7 @@ type NewPasswordPayload = {
   new_password: string;
   confirm_password: string;
 };
+
+type Avatar = FormData;
+
+type ProfileUpdate = Partial<UserProfile>;

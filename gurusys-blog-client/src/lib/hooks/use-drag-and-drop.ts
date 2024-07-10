@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 export const useDragAndDrop = () => {
   const [file, setFile] = useState<File | null>(null);

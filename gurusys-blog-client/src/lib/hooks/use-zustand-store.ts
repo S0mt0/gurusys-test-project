@@ -2,8 +2,8 @@ import { useShallow } from "zustand/react/shallow";
 
 import { authPageStore, authStore, profileStore } from "../store";
 
-export const useAuthStore = () => {
-  return authStore(
+export const useAuthStore = () =>
+  authStore(
     useShallow((state) => ({
       accessToken: state.accessToken,
       trusted_device: state.trusted_device,
@@ -15,24 +15,21 @@ export const useAuthStore = () => {
       endSession: state.endSession,
     }))
   );
-};
 
-export const useProfileStore = () => {
-  return profileStore(
+export const useProfileStore = () =>
+  profileStore(
     useShallow((state) => ({
       profile: state.profile,
       setProfile: state.setProfile,
       getInitials: state.getInitials,
     }))
   );
-};
 
-export const useAuthPageStore = () => {
-  return authPageStore(
+export const useAuthPageStore = () =>
+  authPageStore(
     useShallow((state) => ({
       activePage: state.activePage,
       togglePages: state.setActivePage,
       resetPage: state.resetPage,
     }))
   );
-};

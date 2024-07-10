@@ -45,67 +45,20 @@ export const removeObjectProps = (
   props: string | string[]
 ) => {
   if (Array.isArray(props)) {
-    props.forEach((prop) => delete obj[prop]);
+    props.forEach((prop) => {
+      if (prop.includes(".")) {
+        const [parent, child] = prop.split(".");
+        if (obj[child]) delete obj[parent][child];
+      }
+
+      delete obj[prop];
+    });
   } else delete obj[props];
 
   return obj;
-};
-
-/**
- * Multiplies all the number arguments and returns their product
- * @param args Numbers
- * @returns Product of the passed in numbers
- */
-export const multiply = (...args: number[]) => {
-  if (args.length === 0) {
-    return 0; // If no numbers are provided, return 0
-  }
-
-  return args.reduce(
-    (accumulator, currentValue) => accumulator * currentValue,
-    1
-  );
-};
-
-/**
- * Adds up all the provided number and returns their `sum`
- * @param args Numbers
- * @returns Sum of the passed in numbers
- */
-export const sum = (...args: number[]) => {
-  if (args.length === 0) {
-    return 0; // If no numbers are provided, return 0
-  }
-
-  return args.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0
-  );
 };
 
 /** Generates unique `uuid` */
 export const generateId = () => {
   return uuid();
 };
-
-//==================START OF CUSTOM GLOBAL EXTENSIONS=================
-globalThis.ls = (key: string, value: string) => {
-  localStorage.setItem(key, value);
-};
-
-globalThis.lsJson = (key: string, value: string) => {
-  localStorage.setItem(key, JSON.stringify(value));
-};
-
-globalThis.xls = (key: string) => {
-  localStorage.removeItem(key);
-};
-
-globalThis.lsg = (key: string) => {
-  return localStorage.getItem(key);
-};
-
-globalThis.lsgParse = (key: string) => {
-  return JSON.parse(localStorage.getItem(key) ?? "");
-};
-//===================END OF CUSTOM GLOBAL EXTENSIONS===================

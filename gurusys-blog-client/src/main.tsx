@@ -6,14 +6,14 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ThemeProvider } from "./components";
 
-const queryClient = new QueryClient();
-
 import App from "./App.tsx";
 import "./index.css";
 
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="preferred-theme">
+    <ThemeProvider defaultTheme="light" storageKey="preferred-theme">
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
