@@ -136,7 +136,7 @@ body,
   }
 
   .input-icon {
-    @apply absolute left-4 top-1/2 -translate-y-1/2;
+    @apply absolute left-3 top-1/2 -translate-y-1/2;
   }
 
   .link {

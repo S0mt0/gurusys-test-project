@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import { Button, Input, Logo } from "../utils";
 import { ProfileAvatar } from "./profile-avatar";
 import { ToggleTheme } from "./toggle-theme";
-// import { useAuthStore } from "../../lib/hooks";
+import { useAuthStore } from "../../lib/hooks";
 
 export const NavBar = () => {
-  // const { accessToken } = useAuthStore();
+  const { accessToken } = useAuthStore();
 
   return (
     <nav className="px-8 py-4 flex justify-between gap-6 items-center border-b">
@@ -16,7 +16,7 @@ export const NavBar = () => {
         <Logo />
 
         <div className="relative bg-muted rounded-full w-[200px] hidden sm:block">
-          <SearchIcon className="absolute left-2 top-1/2 -translate-y-1/2 h-5 w-5 pointer-events-none" />
+          <SearchIcon className="input-icon h-5 w-5 pointer-events-none" />
           <Input
             className="rounded-full w-full pl-10 text-lg pr-4 py-5 dark:focus-within:ring-slate-600"
             placeholder="Search"
@@ -44,10 +44,12 @@ export const NavBar = () => {
         >
           <SearchIcon className="h-5 w-5" />
         </Button>
-        <Bell
-          className="h-6 w-6 m-0 text-foreground/75 hover:text-foreground"
-          strokeWidth={1.2}
-        />
+        {accessToken && (
+          <Bell
+            className="h-6 w-6 m-0 text-foreground/75 hover:text-foreground"
+            strokeWidth={1.2}
+          />
+        )}
         <ProfileAvatar />
       </div>
     </nav>
