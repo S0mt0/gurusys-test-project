@@ -22,6 +22,15 @@ const blogSchema = new Schema<IBlog>(
       // required: true,
     },
 
+    likes: {
+      ref: "users",
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+        },
+      ],
+    },
+
     description: {
       type: String,
       maxlength: 200,
@@ -42,12 +51,24 @@ const blogSchema = new Schema<IBlog>(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "users",
+      autopopulate: function () {
+        if (isModelRegistered("users")) {
+          return {
+            select:
+              "personal_info.username personal_info.avatarUrl personal_info.bio",
+          };
+        } else {
+          return false;
+        }
+      },
     },
 
     activity: {
       total_likes: {
         type: Number,
-        default: 0,
+        default: function () {
+          return this.likes.length;
+        },
       },
 
       total_comments: {
@@ -62,7 +83,9 @@ const blogSchema = new Schema<IBlog>(
 
       total_parent_comments: {
         type: Number,
-        default: 0,
+        default: function () {
+          return this.comments.length;
+        },
       },
     },
 
@@ -71,13 +94,6 @@ const blogSchema = new Schema<IBlog>(
       type: [
         {
           type: Schema.Types.ObjectId,
-          autopopulate: function () {
-            if (isModelRegistered("comments")) {
-              return true;
-            } else {
-              return false;
-            }
-          },
         },
       ],
       default: [],

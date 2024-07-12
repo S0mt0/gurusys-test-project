@@ -218,7 +218,12 @@ declare global {
     /** Finds a user by their email */
     findByEmail(email: string): Promise<HydratedDocument<IUser, IUserMethods>>;
 
-    /** Finds a user by their email */
+    /** Finds a user by username */
+    findByUsername(
+      username: string
+    ): Promise<HydratedDocument<IUser, IUserMethods>>;
+
+    /** Finds a user using the `refresh_token` */
     findBySession(
       refresh_token: string
     ): Promise<HydratedDocument<IUser, IUserMethods>>;
@@ -232,8 +237,9 @@ declare global {
     title: string;
     banner: string;
     description: string;
-    content: any[];
+    content: { [key: string]: any }[];
     tags: string[];
+    likes: Types.ObjectId[];
     author: Types.ObjectId;
 
     activity: {
@@ -255,11 +261,16 @@ declare global {
   interface IComment {
     blog_id: Types.ObjectId;
     blog_author: Types.ObjectId;
-    comment: string;
+    likes: Types.ObjectId[];
+    content: string;
     children: CommentDoc[];
     commented_by: Types.ObjectId;
     parent: Types.ObjectId;
     isReply: boolean;
+    activity: {
+      total_comments: number;
+      total_likes: number;
+    };
   }
 
   interface CommentDoc extends Document<IComment> {}

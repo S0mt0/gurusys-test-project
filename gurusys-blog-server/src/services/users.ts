@@ -1,3 +1,5 @@
+import { isEmail } from "validator";
+
 import {
   deleteImageFromCloudinary,
   reject,
@@ -15,13 +17,8 @@ export class UserService {
   /** Creates and returns a new user document */
   public async createAccount(data: any) {
     // step 1: check for duplicate account
-    const emailExists = await Users.findOne({
-      "personal_info.email": data.email,
-    });
-
-    const usernameExists = await Users.findOne({
-      "personal_info.username": data.username,
-    });
+    const emailExists = await Users.findByEmail(data.email);
+    const usernameExists = await Users.findByUsername(data.username);
 
     if (emailExists)
       sendError.duplicateRequestError(
@@ -49,26 +46,49 @@ export class UserService {
    * @returns User Document
    */
   public async authenticate({
-    email,
     password,
+    login,
   }: {
-    email: string;
+    login: string;
     password: string;
     google_auth?: boolean;
   }) {
-    const user = await Users.findByEmail(email);
-    if (!user) reject(`Invalid email or password!`);
+    let query: Record<string, any> = {};
+    let message = "Invalid credentials";
+
+    if (isEmail(login)) {
+      query.personal_info.email = login;
+      message = "Invalid email or password";
+    } else {
+      query.personal_info.username = login;
+      message = "Invalid username or password";
+    }
+
+    const user = await Users.findOne(query);
+    if (!user) reject(message);
 
     const passwordIsValid = await user.verifyPassword(password);
 
-    if (!passwordIsValid) reject(`Invalid email or password!`);
+    if (!passwordIsValid) reject(message);
 
     return user;
   }
 
-  /** Finds a user by their email address */
+  /** Finds a user by their email address and returns a 404 error if user was not found */
   public async findByEmail(email: string) {
     const user = await Users.findByEmail(email);
+
+    if (!user)
+      sendError.notfoundError(
+        "Sorry, we did not find this user in our records."
+      );
+
+    return user;
+  }
+
+  /** Finds a user by their username and returns a 404 error if user was not found */
+  public async findByUsername(username: string) {
+    const user = await Users.findByUsername(username);
 
     if (!user)
       sendError.notfoundError(

@@ -16,7 +16,7 @@ const commentSchema = new mongoose.Schema<IComment>(
       ref: "blogs",
     },
 
-    comment: {
+    content: {
       type: String,
       required: true,
     },
@@ -38,19 +38,56 @@ const commentSchema = new mongoose.Schema<IComment>(
       default: [],
     },
 
+    likes: {
+      ref: "users",
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+        },
+      ],
+    },
+
     commented_by: {
       type: Schema.Types.ObjectId,
       require: true,
       ref: "users",
+      autopopulate: function () {
+        if (isModelRegistered("users")) {
+          return {
+            select:
+              "personal_info.username personal_info.avatarUrl personal_info.bio",
+          };
+        } else {
+          return false;
+        }
+      },
+    },
+
+    activity: {
+      total_likes: {
+        type: Number,
+        default: function () {
+          return this.likes.length;
+        },
+      },
+
+      total_comments: {
+        type: Number,
+        default: function () {
+          return this.children.length;
+        },
+      },
     },
 
     isReply: {
       type: Boolean,
+      default: false,
     },
 
     parent: {
       type: Schema.Types.ObjectId,
       ref: "comments",
+      default: null,
     },
   },
   {

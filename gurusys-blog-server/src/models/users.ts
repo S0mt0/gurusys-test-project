@@ -167,6 +167,10 @@ userSchema.statics.findByEmail = async function (email) {
   return await this.findOne({ "personal_info.email": email });
 };
 
+userSchema.statics.findByUsername = async function (username) {
+  return await this.findOne({ "personal_info.username": username });
+};
+
 userSchema.statics.findBySession = async function (refresh_token) {
   return await this.findOne({ refresh_token: refresh_token });
 };

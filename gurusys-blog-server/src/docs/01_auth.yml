@@ -195,12 +195,15 @@ definitions:
   logIn:
     type: object
     properties:
-      email:
+      login:
         type: string
         required: true
       password:
         type: string
         required: true
+      google_auth:
+        type: boolean
+        default: false
 
   resetPassword:
     type: object

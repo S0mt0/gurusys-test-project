@@ -87,5 +87,5 @@ startServer();
 
 // Quick connection to server without database
 // app.listen(PORT, () =>
-//   console.log(`Server is listening on port: ${PORT}`.blue)
+//   console.log(`Server is listening on port: ${PORT}`)
 // );
