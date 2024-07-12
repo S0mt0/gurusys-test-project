@@ -9,3 +9,4 @@ gurusys-blog-client/.env.local
 gurusys-blog-server/.env
 gurusys-blog-server/.env.production
 gurusys-blog-server/.env.development
+gurusys-blog-server/fpk.json

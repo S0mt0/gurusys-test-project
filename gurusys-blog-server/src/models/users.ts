@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema<IUser, IUserModel>(
       },
       bio: {
         type: String,
-        maxlength: [200, "Bio should not be more than 200"],
+        maxlength: [200, "Bio should not be more than 200 characters."],
         default: "",
       },
       avatarUrl: {
@@ -90,9 +90,13 @@ const userSchema = new mongoose.Schema<IUser, IUserModel>(
       },
     },
 
-    google_auth: {
-      type: Boolean,
-      default: false,
+    auth_provider: {
+      type: String,
+      default: "email",
+      enum: {
+        values: ["email", "google", "github"],
+        message: "Unsupported auth provider.",
+      },
     },
 
     refresh_token: {
@@ -122,12 +126,12 @@ const userSchema = new mongoose.Schema<IUser, IUserModel>(
       createdAt: "joinedAt",
     },
     toObject: transformSchema([
-      "google_auth",
+      "auth_provider",
       "refresh_token",
       "personal_info.password",
     ]),
     toJSON: transformSchema([
-      "google_auth",
+      "auth_provider",
       "refresh_token",
       "personal_info.password",
     ]),
@@ -185,7 +189,7 @@ userSchema.methods.createAccessToken = function (
   expiresAt?: number | undefined
 ) {
   return jwt.sign(
-    { userId: this._id, google_auth: this.google_auth },
+    { userId: this._id, auth_provider: this.auth_provider },
     envs.jwtSecret,
     {
       expiresIn: `${expiresAt || TIME_IN.hours[1]}`,

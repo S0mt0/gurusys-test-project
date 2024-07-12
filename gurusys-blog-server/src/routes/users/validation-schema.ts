@@ -45,8 +45,12 @@ export const CreateNewPasswordSchema = Joi.object({
 export const SignUpDataSchema = Joi.object({
   username: Joi.string().required(),
   password: Joi.string().required(),
-  google_auth: Joi.boolean(),
   email: Joi.string().email({ minDomainSegments: 2 }),
+}).required();
+
+/** Joi Validation Schema for oauth provided login/signup */
+export const OAuthSchema = Joi.object({
+  access_token: Joi.string().required(),
 }).required();
 
 /** Joi Validation Schema for profile update data */

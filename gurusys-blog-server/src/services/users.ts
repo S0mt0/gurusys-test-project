@@ -52,7 +52,7 @@ export class UserService {
   }: {
     login: string;
     password: string;
-    google_auth?: boolean;
+    auth_provider?: boolean;
   }) {
     let query: Record<string, any> = {};
     let message = "Invalid credentials";

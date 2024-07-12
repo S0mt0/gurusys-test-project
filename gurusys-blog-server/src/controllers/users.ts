@@ -34,6 +34,31 @@ export const signUp = async (req: CustomRequest, res: Response) => {
     .status(status.CREATED)
     .json({ success: true, message: "Welcome onboard!👋", data: { user } });
 };
+export const authenticateWithGoogle = async (
+  req: CustomRequest,
+  res: Response
+) => {
+  const user = await userService.createAccount(req.body);
+  const accessToken = user.createAccessToken();
+
+  const refreshTokenExpiresIn = TIME_IN.days[3];
+  const refresh_token = user.createAccessToken(refreshTokenExpiresIn);
+
+  user.refresh_token = refresh_token;
+  await user.save();
+
+  res.cookie("refresh_token", refresh_token, {
+    secure: true,
+    httpOnly: true,
+    sameSite: "none",
+    maxAge: refreshTokenExpiresIn,
+  });
+
+  res.setHeader("Authorization", accessToken);
+  return res
+    .status(status.CREATED)
+    .json({ success: true, message: "Welcome onboard!👋", data: { user } });
+};
 
 export const logIn = async (req: CustomRequest, res: Response) => {
   const user = await userService.authenticate(req.body);

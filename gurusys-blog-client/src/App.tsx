@@ -7,13 +7,12 @@ function App() {
     <Routes>
       <Route element={<components.AppLayout />}>
         {/* public routes  */}
-        <Route index element={<div>hello</div>} />
-        <Route path="/auth/login" element={<div>Login page</div>} />
-
+        <Route index element={<div>Hello</div>} />
+        <Route path="/auth/login" element={<div>login</div>} />
         <Route element={<components.PersistLogin />}>
           <Route element={<components.RequireAuth />}>
             <Route path="/new-story" element={<div>hehehe</div>} />
-          </Route>
+          </Route>{" "}
         </Route>
       </Route>
       {/* catch-all route*/}

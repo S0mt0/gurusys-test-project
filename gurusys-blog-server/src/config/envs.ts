@@ -2,8 +2,8 @@ export const envs = {
   env: process.env.NODE_ENV as "development" | "production" | "test",
   port: process.env.PORT as string,
 
-  googleAuthUser: process.env?.GOOGLE_AUTH_USER as string,
-  googleAuthPassword: process.env?.GOOGLE_AUTH_PASSWORD as string,
+  googleAuthUser: process.env?.auth_provider_USER as string,
+  googleAuthPassword: process.env?.auth_provider_PASSWORD as string,
 
   dbURL: process.env.DB_URL as string,
 
