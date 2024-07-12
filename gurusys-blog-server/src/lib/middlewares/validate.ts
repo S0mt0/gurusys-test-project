@@ -2,6 +2,7 @@ import { NextFunction, Response } from "express";
 import { ObjectSchema } from "joi";
 
 import { sendError } from "../../lib/errors";
+import { CustomRequest } from "@/interface";
 
 /**
  * This middleware validates ***request body*** (ie payload) against the provided *Joi* ***ObjectSchema*** representing the required payload structure and types. If `payload` passes validation, its validated values are then spread into `req.body` after which control is passed to the respective `controller` or `handler` from where these sanitized/validated request `payload` can be accessed for further operations.
@@ -19,7 +20,7 @@ export const validatePayload =
       if (error) sendError.badRequestError(error.message);
 
       req.body = { ...payload, ...value };
-}
+    }
 
     if (fileSchema) {
       const { error, value: files } = fileSchema.validate(req.files);

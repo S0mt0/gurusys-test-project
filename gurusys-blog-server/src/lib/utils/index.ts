@@ -6,6 +6,15 @@ import ShortUniqueId from "short-unique-id";
 import { sendError } from "../../lib/errors";
 import { cloudinary, envs } from "../../config";
 import { UPLOAD_PRESET } from "../constants";
+import {
+  Avatar,
+  CustomGenericDocument,
+  Days,
+  Hours,
+  IUser,
+  Minutes,
+  TimeInMilliseconds,
+} from "@/interface";
 
 /**
  * Used to generate random positive integers of length, 6 by default, otherwise the passed in length

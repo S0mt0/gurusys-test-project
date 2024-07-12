@@ -18,6 +18,7 @@ import { envs } from "../config";
 
 import { Blogs } from "./blogs";
 import { Comments } from "./comments";
+import { IUser, IUserModel } from "@/interface";
 
 const userSchema = new mongoose.Schema<IUser, IUserModel>(
   {

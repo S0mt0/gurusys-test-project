@@ -9,6 +9,7 @@ import {
 import { sendError } from "../lib/errors";
 
 import { Users } from "../models";
+import { CustomRequest } from "@/interface";
 
 /** User service class. */
 export class UserService {

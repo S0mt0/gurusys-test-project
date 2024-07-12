@@ -1,3 +1,4 @@
+import { ErrorData } from "@/interface";
 import { error } from ".";
 
 /**

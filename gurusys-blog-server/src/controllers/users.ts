@@ -10,6 +10,7 @@ import {
 
 import { TIME_IN } from "../lib/constants";
 import { sendError } from "../lib/errors";
+import { CustomRequest } from "@/interface";
 
 export const signUp = async (req: CustomRequest, res: Response) => {
   const user = await userService.createAccount(req.body);

@@ -4,6 +4,7 @@ import { reject, validateObjectId, verifyAuthorization } from "../utils";
 import { sendError } from "../../lib/errors";
 
 import { Users } from "../../models";
+import { CustomRequest } from "@/interface";
 
 /**
  * Verify if user has correct access to resources that they try to access.

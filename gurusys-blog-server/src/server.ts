@@ -1,5 +1,3 @@
-/// <reference path="./types.d.ts" />
-
 import "express-async-errors";
 import "dotenv/config";
 

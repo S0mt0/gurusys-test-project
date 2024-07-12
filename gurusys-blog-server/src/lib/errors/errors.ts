@@ -1,5 +1,7 @@
 import { StatusCodes as status } from "http-status-codes";
 
+import { ErrorData } from "@/interface";
+
 /**
  * Custom Error that extends the global Error object
  * @constructor {ErrorData} data

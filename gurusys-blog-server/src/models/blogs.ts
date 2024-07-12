@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 import { v4 as uuid } from "uuid";
 
 import { isModelRegistered } from "../lib/utils";
+import { IBlog } from "@/interface";
 
 const blogSchema = new Schema<IBlog>(
   {
