@@ -95,6 +95,11 @@ const blogSchema = new Schema<IBlog>(
       type: [
         {
           type: Schema.Types.ObjectId,
+          autopopulate: function () {
+            if (isModelRegistered("comments")) return true;
+
+            return false;
+          },
         },
       ],
       default: [],

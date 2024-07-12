@@ -248,6 +248,6 @@ export const resetForgottenPassword = async (
   res.setHeader("Authorization", accessToken);
   return res.status(status.OK).json({
     success: true,
-    message: "Your password has been reset successfully",
+    message: "Let's go🚀",
   });
 };
