@@ -43,7 +43,7 @@ export class UserService {
 
   /**
    * @note Authentication is the process of *verifying* the **identity** of the client making a request to the server. This `function` therefore is for validating the provided `data` against the database.
-   * @param data *{ email, password }*
+   * @param data *{ login, password }*
    * @returns User Document
    */
   public async authenticate({

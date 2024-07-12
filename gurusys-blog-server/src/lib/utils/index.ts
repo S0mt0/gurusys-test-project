@@ -264,49 +264,49 @@ export const selectivelyUpdateUserProfile = async (
   data: Partial<IUser>
 ) => {
   if (data.personal_info) {
-    if (user.personal_info.avatarUrl) {
+    if (data.personal_info.avatarUrl) {
       user.personal_info.avatarUrl = data.personal_info.avatarUrl;
     }
 
-    if (user.personal_info.bio) {
+    if (data.personal_info.bio) {
       user.personal_info.bio = data.personal_info.bio;
     }
 
-    if (user.personal_info.email) {
+    if (data.personal_info.email) {
       user.personal_info.email = data.personal_info.email;
     }
 
-    if (user.personal_info.fullname) {
+    if (data.personal_info.fullname) {
       user.personal_info.fullname = data.personal_info.fullname;
     }
 
-    if (user.personal_info.username) {
+    if (data.personal_info.username) {
       user.personal_info.username = data.personal_info.username;
     }
   }
 
   if (data.social_links) {
-    if (user.social_links.facebook) {
+    if (data.social_links.facebook) {
       user.social_links.facebook = data.social_links.facebook;
     }
 
-    if (user.social_links.github) {
+    if (data.social_links.github) {
       user.social_links.github = data.social_links.github;
     }
 
-    if (user.social_links.instagram) {
+    if (data.social_links.instagram) {
       user.social_links.instagram = data.social_links.instagram;
     }
 
-    if (user.social_links.twitter) {
+    if (data.social_links.twitter) {
       user.social_links.twitter = data.social_links.twitter;
     }
 
-    if (user.social_links.website) {
+    if (data.social_links.website) {
       user.social_links.website = data.social_links.website;
     }
 
-    if (user.social_links.youtube) {
+    if (data.social_links.youtube) {
       user.social_links.youtube = data.social_links.youtube;
     }
   }
