@@ -1,8 +1,11 @@
 import { Response } from "express";
 import { StatusCodes as status } from "http-status-codes";
+import admin from "firebase-admin";
+import { getAuth } from "firebase-admin/auth";
 
 import { userService } from "../services";
 import {
+  formatUserToSend,
   obscureEmail,
   selectivelyUpdateUserProfile,
   verifyAuthorization,
@@ -10,10 +13,17 @@ import {
 
 import { TIME_IN } from "../lib/constants";
 import { sendError } from "../lib/errors";
-import { CustomRequest } from "@/interface";
+import { CustomRequest, OAuthProviders } from "@/interface";
+
+import serviceAccount from "../../fpk.json";
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+});
 
 export const signUp = async (req: CustomRequest, res: Response) => {
   const user = await userService.createAccount(req.body);
+
   const accessToken = user.createAccessToken();
 
   const refreshTokenExpiresIn = TIME_IN.days[3];
@@ -34,13 +44,23 @@ export const signUp = async (req: CustomRequest, res: Response) => {
     .status(status.CREATED)
     .json({ success: true, message: "Welcome onboard!👋", data: { user } });
 };
-export const authenticateWithGoogle = async (
+export const authenticateWithOAuth = async (
   req: CustomRequest,
   res: Response
 ) => {
-  const user = await userService.createAccount(req.body);
-  const accessToken = user.createAccessToken();
+  const { access_token } = req.body;
 
+  const {
+    email,
+    firebase: { sign_in_provider },
+  } = await getAuth().verifyIdToken(access_token);
+
+  const user = await userService.authenticateWithOAuth(
+    email,
+    sign_in_provider as OAuthProviders
+  );
+
+  const accessToken = user.createAccessToken();
   const refreshTokenExpiresIn = TIME_IN.days[3];
   const refresh_token = user.createAccessToken(refreshTokenExpiresIn);
 
@@ -55,9 +75,11 @@ export const authenticateWithGoogle = async (
   });
 
   res.setHeader("Authorization", accessToken);
-  return res
-    .status(status.CREATED)
-    .json({ success: true, message: "Welcome onboard!👋", data: { user } });
+  return res.status(status.CREATED).json({
+    success: true,
+    message: "Welcome onboard!👋",
+    data: { user: formatUserToSend(user) },
+  });
 };
 
 export const logIn = async (req: CustomRequest, res: Response) => {

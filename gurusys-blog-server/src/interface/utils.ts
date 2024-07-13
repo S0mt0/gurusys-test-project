@@ -158,3 +158,9 @@ export interface MailOptions {
   text?: string;
   attachments?: any;
 }
+
+export type OAuthProviders =
+  | "github.com"
+  | "google.com"
+  | "twitter.com"
+  | "email";

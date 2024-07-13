@@ -43,7 +43,6 @@ export const CreateNewPasswordSchema = Joi.object({
 
 /** Joi Validation Schema for profile update data */
 export const SignUpDataSchema = Joi.object({
-  username: Joi.string().required(),
   password: Joi.string().required(),
   email: Joi.string().email({ minDomainSegments: 2 }),
 }).required();

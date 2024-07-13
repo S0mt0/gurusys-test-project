@@ -94,7 +94,7 @@ const userSchema = new mongoose.Schema<IUser, IUserModel>(
       type: String,
       default: "email",
       enum: {
-        values: ["email", "google", "github"],
+        values: ["email", "google", "github", "twitter"],
         message: "Unsupported auth provider.",
       },
     },

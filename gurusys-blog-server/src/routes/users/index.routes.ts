@@ -15,9 +15,9 @@ export default (router: Router) => {
   );
 
   router.post(
-    "/auth/google",
+    "/auth/oauth",
     validatePayload(_.OAuthSchema),
-    controller.authenticateWithGoogle
+    controller.authenticateWithOAuth
   );
 
   // login

@@ -316,3 +316,24 @@ export const selectivelyUpdateUserProfile = async (
 
   return user;
 };
+
+/** Generates unique `username` from provided email by appending a uniquely generated 3-string id to name of the email */
+export const generateUsername = (email: string) => {
+  const { randomUUID } = new ShortUniqueId({
+    length: 3,
+  });
+
+  const name = email.split("@")[0];
+  return `${name}-${randomUUID()}`;
+};
+
+export const formatUserToSend = (user: CustomGenericDocument<IUser>) => {
+  return {
+    personal_info: {
+      username: user.personal_info.username,
+      email: user.personal_info.email,
+      fullname: user.personal_info.fullname,
+      avatarUrl: user.personal_info.avatarUrl,
+    },
+  };
+};

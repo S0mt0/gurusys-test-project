@@ -53,6 +53,34 @@ paths:
         "500":
           description: An unexpected error occurred
 
+  /api/v1/auth/oauth:
+    post:
+      tags:
+        - Authentication
+      summary: Authentcates (logs in or/and registers) a user based on provided oauth provider. Currently supported include `google`, `twitter`, and `github`
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/OAuthPayload"
+
+      responses:
+        "200":
+          description: Login/Registration successful
+          headers:
+            Authorization:
+              schema:
+                type: string
+        "400":
+          description: Failed schema validation
+        "403":
+          description: Unauthorized
+        "500":
+          description: An unexpected error occurred
+
   /api/v1/auth/forgot-password:
     post:
       tags:
@@ -181,16 +209,15 @@ definitions:
   signUp:
     type: object
     properties:
-      username:
-        type: string
-        default: Sewkito001
       email:
         type: string
         format: email
         default: example@email.com
+        required: true
       password:
         type: string
         default: Password123!
+        required: true
 
   logIn:
     type: object
@@ -223,5 +250,12 @@ definitions:
     type: object
     properties:
       password_reset_code:
+        type: string
+        required: true
+
+  OAuthPayload:
+    type: object
+    properties:
+      access_token:
         type: string
         required: true

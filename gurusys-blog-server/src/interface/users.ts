@@ -25,7 +25,7 @@ export interface IUser {
     total_reads: number;
   };
 
-  auth_provider: "email" | "google" | "github";
+  auth_provider: "email" | "google" | "github" | "twitter";
 
   blogs: BlogDoc[];
   refresh_token: string;

@@ -2,6 +2,7 @@ import { isEmail } from "validator";
 
 import {
   deleteImageFromCloudinary,
+  generateUsername,
   reject,
   uploadImageToCloudinary,
 } from "../lib/utils";
@@ -9,7 +10,7 @@ import {
 import { sendError } from "../lib/errors";
 
 import { Users } from "../models";
-import { CustomRequest } from "@/interface";
+import { CustomRequest, OAuthProviders } from "@/interface";
 
 /** User service class. */
 export class UserService {
@@ -32,11 +33,74 @@ export class UserService {
     // step 2: create a new user
     const user = await Users.create({
       personal_info: {
-        username: data.username,
+        username: generateUsername(data.email),
         email: data.email,
         password: data.password,
       },
     });
+
+    return user;
+  }
+
+  /** Authenticates (Logs in or registers) a user based provided oath-provider  */
+  public async authenticateWithOAuth(
+    email: string,
+    oauth_provider: OAuthProviders = "google.com"
+  ) {
+    let user = await Users.findOne({ "personal_info.email": email }).select(
+      "personal_info.email personal_info.avatarUrl personal_info.fullname personal_info.username"
+    );
+
+    if (user) {
+      if (oauth_provider === "google.com") {
+        if (user.auth_provider !== "google")
+          sendError.unauthorizationError(
+            "This account was not signed up using Google. Try logging in with email and password instead."
+          );
+
+        return user;
+      }
+
+      if (oauth_provider === "github.com") {
+        if (user.auth_provider !== "github")
+          sendError.unauthorizationError(
+            "This account was not signed up using Github. Try logging in with email and password instead."
+          );
+
+        return user;
+      }
+
+      if (oauth_provider === "twitter.com") {
+        if (user.auth_provider !== "twitter")
+          sendError.unauthorizationError(
+            "This account was not signed up using Twitter. Try logging in with email and password instead."
+          );
+
+        return user;
+      }
+    } else {
+      // sign up new user using google email, if no user exists already
+      if (oauth_provider === "google.com") {
+        user = await Users.create({
+          personal_info: { email, username: generateUsername(email) },
+          auth_provider: "google",
+        });
+      }
+
+      if (oauth_provider === "twitter.com") {
+        user = await Users.create({
+          personal_info: { email, username: generateUsername(email) },
+          auth_provider: "twitter",
+        });
+      }
+
+      if (oauth_provider === "github.com") {
+        user = await Users.create({
+          personal_info: { email, username: generateUsername(email) },
+          auth_provider: "github",
+        });
+      }
+    }
 
     return user;
   }
